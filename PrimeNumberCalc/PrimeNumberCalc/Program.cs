@@ -7,41 +7,44 @@ namespace PrimeNumberCalc
     {
         static void Main(string[] args)
         {
-            List<int> numbers = new List<int>();
-            bool loopCtrl = true;
+            var numbers = new List<int>();
+            var isFinished = false;
+            string userInput;
+            int userInputAsInt;
+            int primeNumLowest;
+            int primeNumHighest;
+            var primeNumbers = new List<int>();
+            int i = 0;
 
-            while (loopCtrl)
+
+            while (!isFinished)
             {
-                while (true)
+                Console.WriteLine("Enter a number! If you would like to stop the process, just type finish.");
+                userInput = Console.ReadLine();
+                Console.WriteLine();
+
+                if (userInput.ToLower() == "finish")
+                    isFinished = true;
+                else if (Int32.TryParse(userInput, out userInputAsInt))
+                    numbers.Add(userInputAsInt);
+                else
+                    Console.WriteLine("Please enter a number or the word finish!");
+            }
+
+            foreach (var number in numbers)
+            {
+                if (number != number / 2)
                 {
-
-
-                    Console.WriteLine("Enter a number! If you would like to stop the process, just type finish.");
-                    int userInput = int.Parse(Console.ReadLine());
-
-                    if (userInput.GetType() == typeof(int))
-                    {
-                        numbers.Add(userInput);
-                    }
-                    else if (true)
-                    {
-                        loopCtrl = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please, enter a valid number or the finish command.");
-                    }
-
-                    break;
-
+                    primeNumbers.Add(number);
                 }
-                break;
             }
-            Console.WriteLine(numbers[0]);
 
-                
+            foreach (var number in primeNumbers)
+            {
+                Console.WriteLine(number + " ");
             }
+
         }
+    }
 
 }
-
