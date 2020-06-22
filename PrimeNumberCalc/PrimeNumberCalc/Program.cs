@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PrimeNumberCalc
 {
@@ -7,15 +9,13 @@ namespace PrimeNumberCalc
     {
         static void Main(string[] args)
         {
-            var numbers = new List<int>();
             var isFinished = false;
             string userInput;
             int userInputAsInt;
             int primeNumLowest;
             int primeNumHighest;
             var primeNumbers = new List<int>();
-            int i = 0;
-
+            bool isPrime = true;
 
             while (!isFinished)
             {
@@ -26,25 +26,58 @@ namespace PrimeNumberCalc
                 if (userInput.ToLower() == "finish")
                     isFinished = true;
                 else if (Int32.TryParse(userInput, out userInputAsInt))
-                    numbers.Add(userInputAsInt);
+                {
+                    if (TestForPrime(userInputAsInt, isPrime) == true)
+                    {
+                        primeNumbers.Add(userInputAsInt);
+                    }
+                }
                 else
                     Console.WriteLine("Please enter a number or the word finish!");
             }
 
-            foreach (var number in numbers)
+            Console.WriteLine("If you would like to verify the result, the following is the result of " + primeNumbers.Min() + " raised to the power of " + primeNumbers.Max());
+
+            Console.WriteLine(Math.Pow(primeNumbers.Min(), primeNumbers.Max()));
+
+        }
+
+        static bool TestForPrime(int userInputAsInt, bool isPrime)
+        {
+
+
+            if (userInputAsInt % 2 == 0)
             {
-                if (number != number / 2)
+                isPrime = false;
+            }
+            if (userInputAsInt % 3 == 0)
+            {
+                isPrime = false;
+            }
+
+            if (userInputAsInt % 5 == 0)
+            {
+                isPrime = false;
+            }
+            else
+            {
+                for (int i = 2; i < userInputAsInt / 2; i++)
                 {
-                    primeNumbers.Add(number);
+                    if (userInputAsInt % i == 0)
+                    {
+                        isPrime = false;
+                    }
                 }
             }
 
-            foreach (var number in primeNumbers)
-            {
-                Console.WriteLine(number + " ");
-            }
-
+            return isPrime;
         }
+
     }
 
 }
+
+
+
+
+
